@@ -1,24 +1,35 @@
 buildscript {
-    ext.kotlin_version = '1.2.51'
+    ext.kotlin_version = '1.2.60'
+    ext.dokka_version = '0.9.17'
 
     repositories {
         mavenCentral()
+        jcenter()
+        maven {
+            url 'https://dl.bintray.com/kotlin/kotlin-eap'
+        }
     }
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
     }
 }
 
 apply plugin: "kotlin"
+//For IDE
 apply plugin: "idea"
+//For doc
+apply plugin: 'org.jetbrains.dokka'
 
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    // or better:
     jcenter()
+    maven {
+        url 'https://dl.bintray.com/kotlin/kotlin-eap'
+    }
 }
 
 test {
@@ -36,4 +47,9 @@ dependencies {
 
 task wrapper(type: Wrapper) {
     gradleVersion = "4.10"
+}
+
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/javadoc"
 }
